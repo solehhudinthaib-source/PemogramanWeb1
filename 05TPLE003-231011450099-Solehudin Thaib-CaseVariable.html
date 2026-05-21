@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Case Variabel</title>
+</head>
+<body>
+  <h1>Belajar Variabel JavaScript</h1>
+
+  <script>
+    // Case: Menghitung total belanja sederhana
+
+    var hargaBuku = 50000; 
+    let hargaPulpen = 5000;
+    const diskon = 0.1; // 10% diskon
+
+    var nama = "Solehudin";
+    let jumlahBuku = 2;
+    let jumlahPulpen = 3;
+
+    let totalSebelumDiskon = (hargaBuku * jumlahBuku) + (hargaPulpen * jumlahPulpen);
+    let totalSetelahDiskon = totalSebelumDiskon - (totalSebelumDiskon * diskon);
+
+    let dapatDiskon = true;
+
+    console.log("Nama Pembeli: " + nama);
+    console.log("Total sebelum diskon: Rp" + totalSebelumDiskon);
+    console.log("Diskon: " + (diskon * 100) + "%");
+    console.log("Total setelah diskon: Rp" + totalSetelahDiskon);
+    console.log("Apakah dapat diskon? " + dapatDiskon);
+  </script>
+</body>
+</html>

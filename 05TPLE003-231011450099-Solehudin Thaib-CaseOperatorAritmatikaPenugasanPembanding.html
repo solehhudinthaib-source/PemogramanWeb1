@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Case Operator</title>
+</head>
+<body>
+  <h2>Case: Perhitungan Nilai Mahasiswa</h2>
+  <p id="hasil"></p>
+
+  <script>
+    // Operator Aritmatika
+    let nilaiTugas = 80;
+    let nilaiUTS = 70;
+    let nilaiUAS = 90;
+
+    // Hitung rata-rata (aritmatika)
+    let rataRata = (nilaiTugas + nilaiUTS + nilaiUAS) / 3;
+
+    // Operator Penugasan
+    let nilaiAkhir = rataRata;
+    nilaiAkhir += 5; // menambahkan bonus 5 poin
+
+    // Operator Pembanding
+    let lulus = nilaiAkhir >= 75; // true jika nilai >= 75
+
+    // Output ke console
+    console.log("Nilai Tugas: " + nilaiTugas);
+    console.log("Nilai UTS: " + nilaiUTS);
+    console.log("Nilai UAS: " + nilaiUAS);
+    console.log("Rata-rata: " + rataRata);
+    console.log("Nilai akhir (dengan bonus): " + nilaiAkhir);
+    console.log("Apakah lulus? " + lulus);
+
+    // Output ke halaman
+    document.getElementById("hasil").innerHTML =
+      "Nilai akhir: " + nilaiAkhir + "<br>" +
+      "Status kelulusan: " + (lulus ? "Lulus ✅" : "Tidak Lulus ❌");
+  </script>
+</body>
+</html>

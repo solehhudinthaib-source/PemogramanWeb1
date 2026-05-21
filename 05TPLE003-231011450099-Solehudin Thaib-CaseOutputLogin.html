@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simulasi Login</title>
+</head>
+<body>
+  <h2>Form Login</h2>
+  <p id="status"></p>
+
+  <script>
+    // Variabel username dan password yang benar
+    const usernameBenar = "admin";
+    const passwordBenar = "12345";
+
+    // Input user (simulasi)
+    let inputUsername = "admin";
+    let inputPassword = "12345";
+
+    // Cek login
+    if (inputUsername === usernameBenar && inputPassword === passwordBenar) {
+      // Output ke halaman
+      document.write("<p>Selamat datang, " + inputUsername + "!</p>");
+
+      // Output ke console
+      console.log("Login berhasil untuk user: " + inputUsername);
+
+      // Output alert
+      window.alert("Login berhasil!");
+
+      // Output ke elemen HTML
+      document.getElementById("status").innerHTML = "Status: Login sukses ✅";
+    } else {
+      document.write("<p>Login gagal!</p>");
+      console.log("Login gagal. Username atau password salah.");
+      window.alert("Login gagal!");
+      document.getElementById("status").innerHTML = "Status: Login gagal ❌";
+    }
+  </script>
+</body>
+</html>
