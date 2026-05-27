@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contoh If Else & Switch</title>
+</head>
+<body>
+  <script>
+    // Contoh if else: sistem login sederhana
+    let username = prompt("Masukkan username:");
+    let password = prompt("Masukkan password:");
+
+    if (username === "admin" && password === "1234") {
+      alert("Login berhasil, Selamat datang Admin!");
+    } else {
+      alert("Login gagal, coba lagi!");
+    }
+
+    // Contoh switch case: kategori harga
+    let harga = parseInt(prompt("Masukkan harga barang:"));
+    switch (true) {
+      case (harga < 50000):
+        alert("Kategori: Murah");
+        break;
+      case (harga >= 50000 && harga <= 200000):
+        alert("Kategori: Sedang");
+        break;
+      case (harga > 200000):
+        alert("Kategori: Mahal");
+        break;
+      default:
+        alert("Harga tidak valid");
+    }
+  </script>
+</body>
+</html>
