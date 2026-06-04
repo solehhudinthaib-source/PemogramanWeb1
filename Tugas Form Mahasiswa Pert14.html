@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Data Mahasiswa</title>
+  <style>
+
+    /* ===== STYLE UMUM HALAMAN ===== */
+    body {
+      font-family: Arial, sans-serif; /* Mengatur jenis huruf seluruh halaman */
+      margin: 20px; /* Memberi jarak dari tepi halaman */
+    }
+
+    /* ===== STYLE FORM INPUT ===== */
+    .form-container {
+      display: grid; /* Menggunakan grid agar label dan input sejajar */
+      grid-template-columns: 120px 1fr; /* Kolom pertama untuk label, kolom kedua untuk input */
+      gap: 10px 15px; /* Jarak antar baris dan kolom */
+      max-width: 500px; /* Lebar maksimal form */
+    }
+
+    /* Mengatur tampilan label di form */
+    .form-container label {
+      text-align: right; /* Label rata kanan */
+      font-weight: bold; /* Tulisan label tebal */
+      line-height: 32px; /* Tinggi baris agar sejajar dengan input */
+    }
+
+    /* Mengatur tampilan input teks dan dropdown */
+    .form-container input,
+    .form-container select {
+      width: 100%; /* Lebar penuh sesuai kolom */
+      padding: 6px; /* Jarak dalam input */
+      box-sizing: border-box; /* Padding tidak menambah lebar elemen */
+    }
+
+    /* ===== STYLE TOMBOL AKSI FORM ===== */
+    .buttons {
+      grid-column: span 2; /* Tombol melebar 2 kolom */
+      margin-top: 10px; /* Jarak atas tombol */
+    }
+
+    /* Mengatur tampilan tombol Tambah dan Update */
+    .buttons button {
+      margin-right: 5px; /* Jarak antar tombol */
+      padding: 8px 16px; /* Ukuran tombol */
+    }
+
+    /* ===== STYLE TABEL DAFTAR MAHASISWA ===== */
+    table {
+      width: 100%; /* Tabel melebar penuh */
+      border-collapse: collapse; /* Menggabungkan border agar tidak dobel */
+      margin-top: 20px; /* Jarak tabel dari elemen di atasnya */
+    }
+
+    /* Mengatur border tabel, baris header, dan sel data */
+    table, th, td {
+      border: 1px solid #000; /* Garis tepi tabel berwarna hitam */
+    }
+
+    /* Mengatur padding dan perataan teks di dalam sel */
+    th, td {
+      padding: 8px; /* Jarak dalam sel */
+      text-align: left; /* Teks rata kiri */
+    }
+
+    /* Mengatur tampilan baris header tabel */
+    th {
+      background-color: #f2f2f2; /* Warna abu-abu pada header */
+      font-weight: bold; /* Tulisan header tebal */
+    }
+
+    /* Mengatur tampilan tombol Edit dan Delete di kolom Aksi */
+    .btn-aksi {
+      padding: 4px 10px; /* Ukuran tombol aksi */
+      margin-right: 4px; /* Jarak antar tombol aksi */
+      cursor: pointer; /* Kursor berubah saat hover */
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ===== JUDUL HALAMAN ===== -->
+  <h2>Data Mahasiswa</h2>
+
+  <!-- ===== FORM INPUT DATA MAHASISWA ===== -->
+  <div class="form-container">
+
+    <!-- Input NIM Mahasiswa -->
+    <label for="nim">NIM:</label>
+    <input type="text" id="nim">
+
+    <!-- Input Nama Mahasiswa -->
+    <label for="nama">Nama:</label>
+    <input type="text" id="nama">
+
+    <!-- Dropdown pilihan Jurusan -->
+    <label for="jurusan">Jurusan:</label>
+    <select id="jurusan">
+      <option value="">Pilih Jurusan</option> <!-- Placeholder default -->
+      <option value="Sistem Informasi">Sistem Informasi</option>
+      <option value="Teknik Informatika">Teknik Informatika</option>
+      <option value="Manajemen">Manajemen</option>
+    </select>
+
+    <!-- Dropdown pilihan Fakultas -->
+    <label for="fakultas">Fakultas:</label>
+    <select id="fakultas">
+      <option value="">Pilih Fakultas</option> <!-- Placeholder default -->
+      <option value="Teknik">Teknik</option>
+      <option value="Ekonomi">Ekonomi</option>
+    </select>
+
+    <!-- Tombol aksi form -->
+    <div class="buttons">
+      <button onclick="tambahMahasiswa()">Tambah Mahasiswa</button>
+      <button onclick="updateMahasiswa()">Update Data Mahasiswa</button>
+    </div>
+
+  </div>
+
+  <!-- ===== TABEL DAFTAR MAHASISWA ===== -->
+  <h2>Daftar Mahasiswa</h2>
+  <table id="tabelMahasiswa">
+    <thead>
+      <!-- Baris header kolom tabel -->
+      <tr>
+        <th>NIM</th>
+        <th>Nama</th>
+        <th>Jurusan</th>
+        <th>Fakultas</th>
+        <th>Aksi</th> <!-- Kolom untuk tombol Edit dan Delete -->
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Data mahasiswa akan ditampilkan di sini secara dinamis oleh JavaScript -->
+    </tbody>
+  </table>
+
+  <!-- ===== SCRIPT JAVASCRIPT ===== -->
+  <script>
+
+    // Variabel untuk menyimpan index baris yang sedang diedit (-1 = tidak ada yang diedit)
+    let editIndex = -1;
+
+    // ===== FUNGSI TAMBAH MAHASISWA =====
+    // Fungsi ini dipanggil saat tombol "Tambah Mahasiswa" diklik
+    function tambahMahasiswa() {
+
+      // Mengambil nilai dari setiap field input form
+      const nim      = document.getElementById('nim').value.trim();
+      const nama     = document.getElementById('nama').value.trim();
+      const jurusan  = document.getElementById('jurusan').value;
+      const fakultas = document.getElementById('fakultas').value;
+
+      // Validasi: semua field harus diisi sebelum data ditambahkan
+      if (!nim || !nama || !jurusan || !fakultas) {
+        alert("Semua field wajib diisi!");
+        return; // Hentikan fungsi jika ada field yang kosong
+      }
+
+      // Mengambil elemen tbody dari tabel
+      const tbody = document.querySelector('#tabelMahasiswa tbody');
+
+      // Menambahkan baris baru ke dalam tabel
+      const row = tbody.insertRow();
+
+      // Mengisi setiap sel baris dengan data dari form dan tombol aksi
+      row.innerHTML =
+        "<td>" + nim + "</td>" +
+        "<td>" + nama + "</td>" +
+        "<td>" + jurusan + "</td>" +
+        "<td>" + fakultas + "</td>" +
+        "<td>" +
+          "<button class='btn-aksi' onclick='editMahasiswa(this)'>Edit</button>" +
+          "<button class='btn-aksi' onclick='hapusMahasiswa(this)'>Delete</button>" +
+        "</td>";
+
+      // Mengosongkan form setelah data berhasil ditambahkan
+      clearForm();
+    }
+
+    // ===== FUNGSI EDIT MAHASISWA =====
+    // Fungsi ini dipanggil saat tombol "Edit" pada baris tabel diklik
+    function editMahasiswa(btn) {
+
+      // Mengambil baris tabel tempat tombol Edit diklik
+      const row   = btn.closest('tr');
+      const cells = row.cells; // Mengambil semua sel dalam baris tersebut
+
+      // Mengisi form dengan data dari baris yang dipilih
+      document.getElementById('nim').value      = cells[0].innerText;
+      document.getElementById('nama').value     = cells[1].innerText;
+      document.getElementById('jurusan').value  = cells[2].innerText;
+      document.getElementById('fakultas').value = cells[3].innerText;
+
+      // Menyimpan index baris yang diedit (dikurangi 1 karena ada baris header)
+      editIndex = row.rowIndex - 1;
+    }
+
+    // ===== FUNGSI UPDATE MAHASISWA =====
+    // Fungsi ini dipanggil saat tombol "Update Data Mahasiswa" diklik
+    function updateMahasiswa() {
+
+      // Cek apakah ada data yang sedang diedit
+      if (editIndex < 0) {
+        alert("Pilih data yang ingin diupdate terlebih dahulu dengan klik tombol Edit!");
+        return; // Hentikan fungsi jika belum ada data yang dipilih
+      }
+
+      // Mengambil nilai terbaru dari setiap field input form
+      const nim      = document.getElementById('nim').value.trim();
+      const nama     = document.getElementById('nama').value.trim();
+      const jurusan  = document.getElementById('jurusan').value;
+      const fakultas = document.getElementById('fakultas').value;
+
+      // Validasi: semua field harus diisi sebelum data diupdate
+      if (!nim || !nama || !jurusan || !fakultas) {
+        alert("Semua field wajib diisi!");
+        return; // Hentikan fungsi jika ada field yang kosong
+      }
+
+      // Mengambil baris yang akan diupdate berdasarkan index
+      const tbody = document.querySelector('#tabelMahasiswa tbody');
+      const row   = tbody.rows[editIndex];
+
+      // Memperbarui isi setiap sel dengan data baru dari form
+      row.cells[0].innerText = nim;
+      row.cells[1].innerText = nama;
+      row.cells[2].innerText = jurusan;
+      row.cells[3].innerText = fakultas;
+
+      // Mengosongkan form dan mereset editIndex setelah update selesai
+      clearForm();
+      editIndex = -1;
+    }
+
+    // ===== FUNGSI HAPUS MAHASISWA =====
+    // Fungsi ini dipanggil saat tombol "Delete" pada baris tabel diklik
+    function hapusMahasiswa(btn) {
+
+      // Mengambil baris tabel tempat tombol Delete diklik
+      const row = btn.closest('tr');
+
+      // Menghapus baris dari tabel
+      row.remove();
+
+      // Mengosongkan form dan mereset editIndex setelah hapus
+      clearForm();
+      editIndex = -1;
+    }
+
+    // ===== FUNGSI CLEAR FORM =====
+    // Fungsi untuk mengosongkan semua field input pada form
+    function clearForm() {
+      document.getElementById('nim').value      = '';
+      document.getElementById('nama').value     = '';
+      document.getElementById('jurusan').value  = ''; /* Reset dropdown ke "Pilih Jurusan" */
+      document.getElementById('fakultas').value = ''; /* Reset dropdown ke "Pilih Fakultas" */
+    }
+
+  </script>
+</body>
+</html>
