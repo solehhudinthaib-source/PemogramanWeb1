@@ -1,0 +1,16 @@
+#gameArea {
+  width: 400px;
+  height: 400px;
+  border: 2px solid black;
+  position: relative;
+  background-color: #f0f0f0;
+}
+
+#player {
+  width: 40px;
+  height: 40px;
+  background-color: red;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
